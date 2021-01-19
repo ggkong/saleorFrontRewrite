@@ -9,11 +9,11 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 // require styles
 import 'swiper/css/swiper.css'
 import store from './store'
-
 Vue.use(VueAwesomeSwiper, /* { default global options } */)
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
+// Vue.use(VueApollo);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

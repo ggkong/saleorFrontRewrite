@@ -4,9 +4,10 @@ Vue.use(Vuex);
 const state = {
     draw_value : "",
     input_value : "",
-    upload_value : "",
     params : [],
     swiperWhat: "",
+    returnToken: "",
+    uploadAfpFile: {}
 }
 const getters = {
     getDrawValue(state) {
@@ -15,14 +16,17 @@ const getters = {
     getInputValue(state) {
         return state.input_value  
     },
-    getUploadValue(state) {
-        return state.upload_value
-    },
     getParams(state) {
         return state.params
     },
     getSwiperWhat(state) {
         return state.swiperWhat
+    },
+    getReturnToken(state) {
+        return state.returnToken
+    },
+    getUploadAfpFile(state) {
+        return state.uploadAfpFile
     }
 }
 const mutations = {
@@ -37,6 +41,12 @@ const mutations = {
     },
     SwiperWhat(state, swiperValue) {
         state.swiperWhat = swiperValue
+    },
+    ReturnToken(state, Token) {
+        state.returnToken = Token
+    },
+    UploadAfpFile(state, uploadFile){
+        state.uploadAfpFile = uploadFile
     }
 }
 const actions = {
@@ -51,6 +61,12 @@ const actions = {
     },
     setSwiperWhat(context, swiperValue){
         context.commit('SwiperWhat', swiperValue)
+    },
+    setReturnToken(context, Token) {
+        context.commit("ReturnToken", Token)
+    },
+    setUploadAfpFile(context, uploadFile){
+        context.commit("UploadAfpFile", uploadFile)
     }
     
     // 使用 this.$store.dispatch('setSwiperWhat', "draw")

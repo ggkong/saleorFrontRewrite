@@ -1,51 +1,42 @@
-<template>
-    <div>
-            <el-checkbox-group 
-            v-model="checkedCities"
-            :min="1"
-            :max="3"
-            style="margin: 0 auto; width: 60%;"
-            >
-            <el-checkbox-button v-for="param in params1" :label="param" :key="param"  size="medium">
-                {{param}}
-            </el-checkbox-button>
-            <br>
-            <el-checkbox-button style="margin-top: 20px;" v-for="param in params2" :label="param" :key="param"  size="medium">
-                {{param}}
-            </el-checkbox-button>
-            <br>
-            <el-checkbox-button style="margin-top: 20px;" v-for="param in params3" :label="param" :key="param"  size="medium">
-                {{param}}
-            </el-checkbox-button>
-            <br>
-            
-          </el-checkbox-group>
-    </div>
-    
+  <template>
+    <el-checkbox-group 
+      v-model="checkedCities"
+      :min="1"
+      :max="3"
+      @change="changeCities"
+    >
+      <el-collapse accordion>
+        <el-collapse-item title="a" style="width: 40%; margin: 0 auto;">
+          <el-checkbox  style="width: 80%; margin: 0 auto;" v-for="city in citiesa" :label="city" :key="city">{{city}}</el-checkbox>
+        </el-collapse-item>
+        <el-collapse-item title="b" style="width: 40%; margin: 0 auto;">
+          <el-checkbox  style="width: 80%; margin: 0 auto;" v-for="city in citiesb" :label="city" :key="city">{{city}}</el-checkbox>
+        </el-collapse-item>
+      </el-collapse>
+      
+      
+    </el-checkbox-group>
   </template>
   <script>
+    const cityOptionsa = ['上海', '北京', '广州', '深圳'];
+    const cityOptionsb = ['山东', '江苏', '浙江', '福建'];
     export default {
       data() {
         return {
           checkedCities: [],
-          params1:  ['a', 'b', 'c', 'd'],
-          params2:  ['e', 'f', 'g', 'h'],
-          params3:  ['i', 'j', 'k', 'l'],
+          citiesa: cityOptionsa,
+          citiesb: cityOptionsb
         };
-      }
+      },
+      methods: {
+        changeCities() {
+          console.log(this.checkedCities)
+          this.$store.dispatch('setParams',this.checkedCities)
+          this.$message({
+                message: '您选择的值是'+this.$store.getters.getParams,
+                type: 'success'})
+        }
+      },
     };
   </script>
-  <style>
-      .demo-table-expand {
-    font-size: 0;
-  }
-  .demo-table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
-  </style>
+  
