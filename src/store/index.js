@@ -7,7 +7,7 @@ const state = {
     params : [],
     swiperWhat: "",
     returnToken: "",
-    uploadAfpFile: {}
+    uploadAfpFile: null
 }
 const getters = {
     getDrawValue(state) {
