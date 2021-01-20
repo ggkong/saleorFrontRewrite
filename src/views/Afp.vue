@@ -6,15 +6,16 @@
           </el-header>
           
           <el-main>
+              
               <Swiper
                 style="width: 50%; float: left;"
               ></Swiper>
               <Params
                 style="width: 50%; float: left;"
               ></Params>
-              <el-button type="primary" :loading="flag" v-on:click="submit" style="margin: 20px 100px; float: left; width: 20%;">提交</el-button>
+              <el-button type="primary" :loading="flag" v-on:click="submit" style="margin: 20px 100px; float: left; width: 20%;">{{$t('m.submit')}}</el-button>
               <el-input
-                placeholder="等待token 值"
+                :placeholder="$t('m.wait_token')"
                 v-model="this.$store.getters.getReturnToken"
                 :disabled="true"
                 style="width: 50%;"
@@ -22,7 +23,7 @@
               </el-input>
             
               <el-input
-              placeholder="等待smiles 值"
+              :placeholder="$t('m.wait_smiles')"
               v-model="this.smiles"
               :disabled="true"
               style="width: 50%;"
@@ -33,21 +34,24 @@
               <el-table
               :data="tableData"
               style="width: 50%;"
+              :empty-text="$t('m.no_data')"
             > 
-          <el-table-column label="smiles">
+          <el-table-column 
+            <!-- :label="$t('m.smiles')" -->
+          >
             <el-table-column
               prop="name"
-              label="名字"
+              :label="$t('m.name')"
             >
             </el-table-column>
             <el-table-column
               prop="Result"
-              label="结果"
+              :label="$t('m.result')"
             >
             </el-table-column>
             <el-table-column
               prop="Probability"
-              label="数值"
+              :label="$t('m.probability')"
             >
             </el-table-column>
           </el-table-column>  
@@ -68,7 +72,6 @@
     import Swiper from '../components/Swiper' ;
     import Params from '../components/Params' ;
     import { getProducts,getJsonResults,createOrder }  from '../graphql/check.js'
-    import axios from 'axios'
     export default {
         name: "Afp",
         components : {
@@ -81,19 +84,6 @@
           return {
             flag: false,
             jsonRestlt: "",
-            // jsondata: {
-            //   "C1=CC=CC=C1": {
-            //       "Fish Toxicity II": {
-            //           "Result": "High FHMT",
-            //           "Probability": 0.62577356822818
-            //       },
-            //       "Honey Bee Toxicity": {
-            //           "Result": "highAT",
-            //           "Probability": 0.5482682077332233
-            //       }
-            //   },
-              
-            // },
             tableData: [],
             smiles:""
           }
@@ -103,46 +93,7 @@
             this.flag = true
             console.log("现在是submit")
             console.log(this.$store.getters.getUploadAfpFile)
-            // var query = `
-            // mutation($product: Int!, $uploadFile: Upload, $drawValue: String, $inputValue: String, $attr: [String]){
-            //  CheckoutCreate(
-            //   checkout:{
-            //     product: $product
-            //     uploadFile: $uploadFile
-            //     drawValue: $drawValue
-            //     inputValue: $inputValue
-            //     attr: $attr
-            // }
-            // )
-            // {
-            //   ok
-            //   token
-            // }
-            // }
-            // `;
-            // var formData = new FormData();
-            // const operations = JSON.stringify({
-            //   query,
-            //   variables: { product:1, uploadFile: null, drawValue: this.$store.getters.getDrawValue, inputValue: this.$store.getters.getInputValue, attr: ["T_FHMT_I","T_HBT_I"] },
-            //  });
-            //  formData.append("operations", operations);
-            //   const map = {
-            //     "1": ["variables.file"],
-            //   };
-            // formData.append("map", JSON.stringify(map));
-            // formData.append("1", this.$store.getters.getUploadAfpFile);
-            // console.log(formData)
-            // axios({
-            //   url: "http://39.101.164.11:8080/graphql/",
-            //   method: "post",
-            //   data: formData,
-            //   headers: {
-            //   "Content-Type": "multipart/form-data",
-            // },
-            // }).then((res) => {
-            //   console.log("我成功了")
-            // })
-            createOrder({product:1, uploadFile: this.$store.getters.getUploadAfpFile, drawValue: this.$store.getters.getDrawValue, inputValue: this.$store.getters.getInputValue, attr: ["T_FHMT_I","T_HBT_I"] }).then(
+            createOrder({product:1, uploadFile: this.$store.getters.getUploadAfpFile, drawValue: this.$store.getters.getDrawValue, inputValue: this.$store.getters.getInputValue, attr: this.$store.getters.getParams }).then(
               (res) => {
                 this.flag = false
                 console.log(res)

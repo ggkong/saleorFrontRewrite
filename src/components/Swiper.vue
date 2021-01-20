@@ -20,7 +20,7 @@
             <div class="swiper-button-next" slot="button-next" @click="next"></div>
           </swiper>
           <div id="buttons" style="width: 40%; margin: 0 auto;">
-            <el-button type="primary" round style="margin: 0 auto;" v-on:click="sure">确认</el-button>
+            <el-button type="primary" round style="margin: 0 auto;" v-on:click="sure">{{$t('m.confirm')}}</el-button>
             <!-- <el-button type="primary" round style="margin: 0 auto;" v-on:click="deleteValue">取消</el-button> -->
             </div>
           
@@ -77,21 +77,21 @@
                 // 调用 
                 this.$store.dispatch('setDrawValue',this.getSmiles())
                 this.$message({
-                message: '您画的值是'+this.$store.getters.getDrawValue,
+                message: this.$t('m.selectTip')+this.$store.getters.getDrawValue,
                 type: 'success'})
               }catch (error) {
                 // 消息提示
                 console.log(error)
-                this.$message.error('您没有画分子式');
+                this.$message.error(this.$t('m.noValue'));
                 return
               }
             }
             if(this.$store.getters.getSwiperWhat == "input"){
               if (this.$store.getters.getInputValue == ""){
-                this.$message.error("您没有输入值")
+                this.$message.error(this.$t('m.noValue'))
               }else{
                 this.$message({
-                message: '您输入的值是'+this.$store.getters.getInputValue,
+                message: this.$t('m.selectTip')+this.$store.getters.getInputValue,
                 type: 'success'
             });
               }
