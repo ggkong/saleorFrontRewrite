@@ -1,5 +1,5 @@
 # saleor_front
-
+## 对 saleor 项目 前端进行的 vue 版本的 重写
 > A Vue.js project
 
 ## Build Setup
